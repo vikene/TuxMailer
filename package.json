@@ -1,0 +1,31 @@
+{
+  "name": "tuxmailer",
+  "version": "1.0.0",
+  "description": "Cool Electron Mail ",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vikene/TuxMailer.git"
+  },
+  "keywords": [
+    "Mail",
+    "Hybrid",
+    "Tux"
+  ],
+  "author": "Vigneash Sundararajan",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/vikene/TuxMailer/issues"
+  },
+  "homepage": "https://github.com/vikene/TuxMailer#readme",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "electron-packager": "^8.5.1"
+  }
+}
