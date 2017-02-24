@@ -1,60 +1,163 @@
+'use strict';
 const electron = require('electron')
-// Module to control application life.
-const app = electron.app
-// Module to create native browser window.
+const electronapp = electron.app
 const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+process.chdir(__dirname);
+
+var cluster = require('cluster');
+var config = require('config');
+var log = require('npmlog');
+var os = require('os');
+
+//log.level = config.log.level;
+
+process.on('SIGTERM', function() {
+  log.warn('exit', 'Exited on SIGTERM');
+  process.exit(0);
+});
+
+process.on('SIGINT', function() {
+  log.warn('exit', 'Exited on SIGINT');
+  process.exit(0);
+});
+
+process.on('uncaughtException', function(err) {
+  log.error('uncaughtException ', err);
+  process.exit(1);
+});
 let mainWindow
 
 function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600,frame:false})
+  mainWindow = new BrowserWindow({width: 1000, height: 580,frame:false})
 
-  // and load the index.html of the app.
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'src/index.html'),
+    pathname: path.join(__dirname, 'dist/index.html'),
     protocol: 'file:',
     slashes: true
   }))
 
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
-
-  // Emitted when the window is closed.
   mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
+
     mainWindow = null
   })
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
 
-// Quit when all windows are closed.
-app.on('window-all-closed', function () {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
+electronapp.on('ready', createWindow)
+
+electronapp.on('window-all-closed', function () {
+
   if (process.platform !== 'darwin') {
-    app.quit()
+    electronapp.quit()
   }
 })
 
-app.on('activate', function () {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
+electronapp.on('activate', function () {
+
   if (mainWindow === null) {
     createWindow()
   }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+var express = require('express');
+var compression = require('compression');
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+var net = require('net');
+var development = (process.argv[2] === '--dev');
+app.use(function(req, res, next) {
+  next();
+});
+
+app.use('/tpl/read-sandbox.html', function(req, res, next) {
+  res.set('X-Frame-Options', 'SAMEORIGIN');
+  next();
+});
+
+// redirect all http traffic to https
+app.use(function(req, res, next) {
+  if ((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https') && !development) {
+    res.redirect('https://' + req.hostname + req.url);
+  } else {
+    next();
+  }
+});
+
+// use gzip compression
+app.use(compression());
+
+
+
+io.on('connection', function(socket) {
+
+  socket.on('open', function(data, fn) {
+    if (!development && config.server.outboundPorts.indexOf(data.port) < 0) {
+      socket.disconnect();
+      return;
+    }
+
+    var tcp = net.connect(data.port, data.host, function() {
+
+      tcp.on('data', function(chunk) {
+        socket.emit('data', chunk);
+      });
+
+      tcp.on('error', function(err) {
+        socket.emit('error', err.message);
+      });
+
+      tcp.on('end', function() {
+        socket.emit('end');
+      });
+
+      tcp.on('close', function() {
+        socket.emit('close');
+
+        socket.removeAllListeners('data');
+        socket.removeAllListeners('end');
+      });
+
+      socket.on('data', function(chunk, fn) {
+        if (!chunk || !chunk.length) {
+          if (typeof fn === 'function') {
+            fn();
+          }
+          return;
+        }
+        tcp.write(chunk, function() {
+          if (typeof fn === 'function') {
+            fn();
+          }
+        });
+      });
+
+      socket.on('end', function() {
+        tcp.end();
+      });
+
+      if (typeof fn === 'function') {
+        fn(os.hostname());
+      }
+
+      socket.on('disconnect', function() {
+        tcp.end();
+        socket.removeAllListeners();
+      });
+    });
+  });
+});
+
+//
+// start server
+//
+
+server.listen(8889);
+if (development) {
+  console.log(' > starting in development mode');
+}
+console.log(' > listening on http://localhost:' + 8889+ '\n');
