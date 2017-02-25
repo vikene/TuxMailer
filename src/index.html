@@ -6,10 +6,13 @@
   <title></title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300|Rubik:400|Cabin:400" rel="stylesheet">
   <link rel="stylesheet" href ="styles/main.css">
-
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+    ></script>
 </head>
 
 <body>
@@ -19,24 +22,29 @@
   <div id="menu">
     <ul class="menulist">
       <li class="menuitem">
-    <i class="fa fa-envelope-o" style="color:#40C4FF" aria-hidden="true"></i> Inbox
+    <i class="fa fa-envelope-o fa-fw" style="color:#40C4FF" aria-hidden="true"></i>&nbsp; Inbox
   </li>
-    <li class="menuitem"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Snoozed</li>
+    <li class="menuitem"><i class="fa fa-clock-o fa-fw" style="color:#FFA726" aria-hidden="true"></i>&nbsp; Snoozed</li>
 
-    <li class="menuitem"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Sent</li>
-    <li class="menuitem"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Drafts</li>
-    <li class="menuitem"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Pins</li>
+    <li class="menuitem"><i class="fa fa-paper-plane-o fa-fw" style="color: #BDBDBD" aria-hidden="true"></i>&nbsp; Sent</li>
+    <li class="menuitem"><i class="fa fa-file-text-o fa-fw" style="color: #BDBDBD" aria-hidden="true"></i>&nbsp; Drafts</li>
+    <li class="menuitem"><i class="fa fa-thumb-tack fa-fw" style="color: #F44336" aria-hidden="true"></i>&nbsp; Pins</li>
 
-    <li class="menuitem"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Archive</li>
-    <li class="menuitem"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Spam</li>
-    <li class="menuitem"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Trash</li>
+    <li class="menuitem"><i class="fa fa-archive fa-fw" style="color: #CDDC39" aria-hidden="true"></i>&nbsp; Archive</li>
+    <li class="menuitem"><i class="fa fa-envelope-open fa-fw" style="color:#BDBDBD" aria-hidden="true"></i>&nbsp; Spam</li>
+    <li class="menuitem"><i class="fa fa-trash-o fa-fw" style="color: #D50000" aria-hidden="true"></i>&nbsp; Trash</li>
   </ul>
   </div>
 <div id="main">
+  <form class="searchbar">
+    <input id="sbar" type="text" name="search" placeholder="Search">
+    <div id="enclose"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+</div>
 
+  </form>
   <ul class="maillist">
     <li class="mailitem">
-      <i class="fa fa-exclamation notif" aria-hidden="true"></i>
+      <i class="fa fa-exclamation notif flag" aria-hidden="true"></i>
       <h3> The Grasslands</h3>
       <span class="datetime">12:50PM</span>
       <h6><b>Lorem ipsum dolor sit </b></h6>
@@ -44,7 +52,7 @@
       <p class="mailmessage"> This is a sample Message ...</p>
     </li>
     <li class="mailitem">
-      <i class="fa fa-exclamation notif" aria-hidden="true"></i>
+      <i class="fa fa-rss notif lessflag" aria-hidden="true"></i>
       <h3> The Grasslands</h3>
       <span class="datetime">12:50PM</span>
       <h6><b>Lorem ipsum dolor sit </b></h6>
@@ -104,7 +112,29 @@
 
 </div>
 <div id="sidepan">
-<img class="mailimage" src="letter-147563_640.png" width="60%" height="40%"/>
+<img class="mailimage" src="letter-147563_640.png" width="20%" height="25%"/>
 </div>
+<script>
+$(document).ready(function() {
+  $('#sbar').focus(function(){
+    $('#enclose').slideUp(80);
+  });
+  $('#sbar').focusout(function(){
+    $('#enclose').delay(300).fadeIn(400);
+  });
+       });
+       const BrowserWindow = require('electron').remote.BrowserWindow
+       const path = require('path')
+
+       const newWindowBtn = document.getElementById('enclose')
+
+       newWindowBtn.addEventListener('click', function (event) {
+         const modalPath = path.join('file://', __dirname, 'index.html')
+         let win = new BrowserWindow({ width: 400, height: 320 })
+         win.on('close', function () { win = null })
+         win.loadURL(modalPath)
+         win.show()
+       })
+</script>
 </body>
 </html>

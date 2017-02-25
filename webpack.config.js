@@ -26,7 +26,8 @@ module.exports = {
         presets: ['es2015']
       }
     },
-  { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' }
+  { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' },
+   { test: /\.png$/, loader: "url-loader?limit=100000" }
 ]
   },
   alias: {
