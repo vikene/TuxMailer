@@ -10,8 +10,6 @@ var imapClient;
 
     imapClient = new ImapClient('imap-mail.outlook.com', 993, {
       auth: {
-        user: 'vigneashsundar@live.com',
-        pass: 'raveena@13'
       }
     });
 
