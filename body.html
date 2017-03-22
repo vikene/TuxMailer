@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CloudBleed security leak: is your website affected? What steps should you take?</title>
+  </head>
+  <body>
+    <p style="text-align: left">
+
+      At iubenda we provide tools that allow websites and apps to comply with the law, so we thought it would be useful for you to understand how a data leak like &quot;CloudBleed&quot; should be handled.<br><br>
+
+      <strong>What happened</strong><br>
+      CloudFlare, a popular CDN provider used by millions of websites, had a serious security leak. <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…50LXJlcG9ydC1vbi1tZW1vcnktbGVhay1jYXVzZWQtYnktY2xvdWRmbGFyZS1wYXJzZXItYnVn">According to CloudFlare</a>, a bug caused all websites using some specific CloudFlare features to potentially leak sensitive data, including passwords.<br><br>
+
+      <strong>Â«Is my website affected?Â» Most likely YES if you're using CloudFlare</strong><br>
+      If you're using CloudFlare, your website is affected if you use the following features:
+
+	  <ul>
+		  <li>Since September 22, 2016, the <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…FydGljbGVzLzIyNzIyNzY0Ny1Ib3ctZG8tSS11c2UtQXV0b21hdGljLUhUVFBTLVJld3JpdGVz">Automatic HTTP Rewrites feature</a> is affected</li>
+		  <li>Since January 30, 2017, the <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…FydGljbGVzLzIwMDE3MDAzNi1XaGF0LWRvZXMtU2VydmVyLVNpZGUtRXhjbHVkZXMtU1NFLWRv">Server-Side Excludes feature</a> is affected</li>
+		  <li>Since February 13, 2017, the <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…XVzL2FydGljbGVzLzIwMDE3MDAxNi1XaGF0LWlzLUVtYWlsLUFkZHJlc3MtT2JmdXNjYXRpb24">Email Obfuscation feature</a> is affected</li>
+	  </ul>
+
+	  According to CloudFlare, the bug causing the leak was fixed on February 18, 2017.<br><br>
+
+	  Check your CloudFlare setup and assess if you have been affected and beginning when.<br><br>
+
+	  <strong>Â«What should I do if my website is affected?Â»</strong><br>
+	  The vast majority of jurisdictions require you to notify users of a potential data leak and take all necessary actions to mitigate it.<br><br>
+
+	  First, you should assess what data could have leaked. If you allow users to sign up and login, this is what you should do:
+
+	  <ul>
+	  	<li>Assess when the bug first affected you according to the list above</li>
+	  	<li>Consider expiring all login tokens for the affected period</li>
+	  	<li>Consider forcing all users who logged in or signed up in that time span to reset their passwords</li>
+	  	<li>Warn your users about what happened</li>
+	  </ul>
+
+	  <strong>Â«My website wasn't affected, is there anything I should do?Â»</strong><br>
+	  It's advisable that you <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…Y29tL3BpcmF0ZS9zaXRlcy11c2luZy1jbG91ZGZsYXJlL2Jsb2IvbWFzdGVyL1JFQURNRS5tZA">check this list of websites using CloudFlare</a> and consider changing the password of any accounts you may have there.<br><br>
+
+	  Feel free to share <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…e-x1PygAA9LE/6/OOFjoRoIwEhatgJDaVAdYA/aHR0cDovL2JpdGx5LmNvbS9jbG91ZGJsZWVk">our blog post on Medium</a> via <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…yUyMHNob3VsZCUyMHlvdSUyMHRha2U_JTIwaHR0cCUzQS8vYml0bHkuY29tL2Nsb3VkYmxlZWQ">twitter</a> or <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…0LXN0ZXBzLXNob3VsZC15b3UtdGFrZS1hYmJhZmRiZDA4NWEjLmQ1cHltZ3k4aw#.d5pymgy8k">facebook</a>, which by the way was likely affected too.<br><br>
+
+	  Also <strong><a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…x1PygAA9LE/9/yJR3_Od8tq43Uoci5DPRSw/aHR0cDovL2JpdC5seS9jbG91ZGJsZWVkaW5mbw">check out our infographic</a></strong> on CloudBleed and share it via <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…UyMHNob3VsZCUyMHlvdSUyMHRha2U_JTIwaHR0cCUzQS8vYml0Lmx5L2Nsb3VkYmxlZWRpbmZv">twitter</a> or <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…GhwP3U9aHR0cHM6Ly93d3cuaXViZW5kYS5jb20vaW5mb2dyYXBoaWMvY2xvdWRibGVlZC5wbmc">facebook</a>.<br><br>
+
+	  <strong>What about iubenda?</strong><br>
+	  We recently moved to Akamai, but were marginally affected nonetheless. We're thus automatically requesting that a small number of our users reset their passwords.<br><br>
+
+      Best,<br>
+      Andrea Giannangelo<br>
+      CEO, <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…S3XUe-x1PygAA9LE/12/S7__cIfGhuAumO8dpKaZ2g/aHR0cHM6Ly93d3cuaXViZW5kYS5jb20">iubenda</a><br><br>
+
+      -------<br>
+
+      <span style="font-size: 0.8em;">We take great care in providing information to you, but please be aware of the fact that these emails can not be considered a substitute for professional legal advice, nor do they create an attorney-client relationship â <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…/13/t3I25VErzr3wyKz2CLhVaQ/aHR0cHM6Ly93d3cuaXViZW5kYS5jb20vZW4vdXNlci90b3M">Terms</a> â <a href="http://0oyg.mj.am/lnk/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8…IXEteKWCb0H1g/aHR0cHM6Ly93d3cuaXViZW5kYS5jb20vcHJpdmFjeS1wb2xpY3kvMjUyMzcy">Privacy</a><br>
+      <a href="http://0oyg.mj.am/unsub2?hl=en&amp;m=ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABF…x1PygAA9LE&amp;b=863ce791&amp;e=3f06f10e&amp;email=vigneashsundar@live.com">Unsubscribe</a><br><br>
+
+	  <b>iubenda s.r.l</b> / Via Torino, 2 - 20123 Milan (Italy)<br>
+	  VAT/Tax number: IT07347120961 / CS: 12987 Eur (I.V.)<br>
+	  Milan Chamber of Commerce</span>
+    </p>
+
+<br><img src="http://0oyg.mj.am/oo/ADwAHoqyXgsAAYkqzqIAAEP2wVEAAHIN7kwABFE6AAD89QBYsKJG8q0OuWMjReqS3XUe-x1PygAA9LE/8a8c1eec/e.gif" height="1" width="1" alt="" border="0" style="height:1px;width:1px;border:0;">
+</body>
+</html>

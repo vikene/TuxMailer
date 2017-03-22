@@ -8,11 +8,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300|Rubik:400|Cabin:400" rel="stylesheet">
-  <link rel="stylesheet" href ="styles/main.css">
   <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-  <script
-    src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
-    ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      var ImapClient, SmtpClient;
+      var MimeParser;
+      var parser;
+      if (window && window.process && window.process.type) {
+        ImapClient = require("emailjs-imap-client");
+        SmtpClient = require("emailjs-smtp-client");
+        MimeParser = require('emailjs-mime-parser');
+        parser = new MimeParser();
+      } else {
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></scr' + 'ipt>');
+      }
+    </script>
+
 </head>
 
 <body>

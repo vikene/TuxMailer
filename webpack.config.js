@@ -35,12 +35,14 @@ module.exports = {
   },
   resolve: {
     root: [
-      path.resolve('./src/'),
       path.resolve('./node_modules/emailjs-imap-client/src/'),
       path.resolve('./node_modules/emailjs-imap-handler/src/'),
       path.resolve('./node_modules/emailjs-tcp-socket/src/'),
       path.resolve('./node_modules/emailjs-smtp-client/src/'),
       path.resolve('./node_modules/emailjs-stringencoding/src/'),
+      path.resolve('./node_modules/emailjs-mime-codec/src/'),
+      path.resolve('./src/'),
+
     ]
   },
   devtool: "eval-cheap-module-source-map",
